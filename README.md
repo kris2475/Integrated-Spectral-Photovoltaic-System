@@ -27,7 +27,7 @@ Designed for field research, solar characterisation, and optical optimisation, f
 
 ### Real-Time Python GUI Dashboard
 <p align="center">
-  <img src="Integrated_Spectral_PV5/Screenshot_2026.png" width="700" alt="GUI Dashboard">
+  <img src="Integrated_Spectral_PV5/Screenshot_2026.png" width="800" alt="GUI Dashboard">
 </p>
 <p align="center">
   <em>Live multi-threaded monitoring interface showing calibrated spectral profile, V/I/P curves, and saturation flags.</em>
