@@ -1,5 +1,8 @@
 # Integrated Spectral Photovoltaic System
 
+
+DOI: 10.5281/zenodo.17266828
+
 [![ESP32 Platform](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/)
 [![Python UI](https://img.shields.io/badge/GUI-Python%20%2F%20Tkinter-green.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
