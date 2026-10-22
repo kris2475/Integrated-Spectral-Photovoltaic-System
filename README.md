@@ -7,9 +7,9 @@ DOI: 10.5281/zenodo.17266828
 [![Python UI](https://img.shields.io/badge/GUI-Python%20%2F%20Tkinter-green.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An advanced, high-performance embedded telemetry platform combining real-time **Maximum Power Point Tracking (MPPT)** for photovoltaic cells, **Hamamatsu C12880MA micro-spectrometer** optical characterization, and comprehensive **environmental monitoring (BME680 TPH+Gas, GY-30 Lux)**. 
+A high-performance embedded telemetry platform combining real-time **Maximum Power Point Tracking (MPPT)** for photovoltaic cells, **Hamamatsu C12880MA micro-spectrometer** optical characterization, and comprehensive **environmental monitoring (BME680 TPH+Gas, GY-30 Lux)**. 
 
-Designed for field research, solar characterization, and optical optimisation, featuring dual-core ESP32 edge processing, on-chip polynomial wavelength calibration, SD card wear-leveled batch logging, and a real-time Tkinter/Matplotlib sci-fi telemetry dashboard.
+Designed for field research, solar characterisation, and optical optimisation, featuring dual-core ESP32 edge processing, on-chip polynomial wavelength calibration, SD card wear-leveled batch logging, and a real-time Tkinter/Matplotlib sci-fi telemetry dashboard.
 
 ---
 
