@@ -64,7 +64,7 @@ All peripheral components interface directly with the **ESP32 NodeMCU (38-pin De
 ### 4. Power Electronics & MPPT Control
 | Component | ESP32 Pin | Description |
 | :--- | :--- | :--- |
-| **PWM Gate Driver** | **GPIO 15** | DC-DC Boost/Buck converter PWM output ($1\,\text{kHz}$, $12$-bit resolution) |
+| **PWM Gate Driver** | **GPIO 15** | PWM control signal for the MOSFET load ($1\,\text{kHz}$, $12$-bit resolution) |
 | **INA226 Current/Voltage** | **I2C (21/22)** | High-side bidirectional bus voltage & shunt current sensor for MPPT loop |
 
 ---
