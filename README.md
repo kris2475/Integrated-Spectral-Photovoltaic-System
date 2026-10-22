@@ -15,7 +15,7 @@ Designed for field research, solar characterisation, and optical optimisation, f
 
 ##  System Overview & Hardware Gallery
 
-### Hardware Assembled Deck
+### Hardware
 <p align="center">
   <img src="Integrated_Spectral_PV5/IMG20261022084802.jpg" width="700" alt="Hardware Deck">
 </p>
@@ -35,7 +35,7 @@ Designed for field research, solar characterisation, and optical optimisation, f
 
 ---
 
-## 🔌 Complete Hardware Pin Connections
+## Complete Hardware Pin Connections
 
 All peripheral components interface directly with the **ESP32 NodeMCU (38-pin DevKit)**.
 
