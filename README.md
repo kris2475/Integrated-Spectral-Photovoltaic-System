@@ -1,114 +1,110 @@
-# ☀️ OPV Research Node: MPPT & Spectroscopic Data Logger (ESP32)
+# Integrated Spectral Photovoltaic System
 
-A robust, multi-sensor data acquisition and power management system built on the **ESP32** platform, specifically designed for **Organic Photovoltaic (OPV)** research. It implements an advanced **Maximum Power Point Tracking (MPPT)** algorithm with a unique **low-light fix** and logs comprehensive sensor data, including full spectral scans, to an SD card with **NTP timestamping**.
 
-## ✨ Key Features
+DOI: 10.5281/zenodo.17266828
 
-* **Advanced MPPT with Low-Light Fix:** Implements a Perturb & Observe (P&O) MPPT algorithm for the OPV panel. Crucially, it includes an integrated fix to:
-    * **Pause MPPT at Night:** Automatically halts the algorithm when ambient light (Lux < 50), setting the load to a light "parking" value to prevent the shorting of the panel in the dark.
-    * **Daybreak Reset:** Resets MPPT state variables when light returns, ensuring accurate tracking from the start of the day.
-* **Comprehensive Sensor Suite:** Collects data from five different sensors:
-    * **INA226:** Measures high-precision voltage, current, and power of the OPV panel.
-    * **C12880MA Spectrometer:** Captures detailed spectral data (288 channels) with **Adaptive Gain Control** to prevent sensor saturation.
-    * **BME680:** Environmental monitoring (Temperature, Pressure, Humidity, and Gas Resistance).
-    * **GY-30 (BH1750):** High-resolution ambient light measurement (Lux).
-* **Reliable Data Logging:** All sensor data is consolidated into a single **CSV file** on an **SD Card**.
-    * **Conditional Logging:** Data is only written when ambient light is sufficient (Lux > 50), optimizing SD card lifetime and reducing irrelevant data.
-    * **Accurate Timestamping:** Connects to **WiFi/NTP** for precise date and time stamping. Falls back to an `UNSYNCED_millis()` timestamp if network connection fails.
-* **Real-time OLED Diagnostics:** Displays live sensor readings, MPPT parameters, and a dynamic spectrograph plot on a 128x64 OLED display for immediate troubleshooting and monitoring.
-* **I2C Diagnostic Scanner:** Runs at startup to confirm the presence and addresses of all I2C-based sensors.
+[![ESP32 Platform](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/)
+[![Python UI](https://img.shields.io/badge/GUI-Python%20%2F%20Tkinter-green.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+An advanced, high-performance embedded telemetry platform combining real-time **Maximum Power Point Tracking (MPPT)** for photovoltaic cells, **Hamamatsu C12880MA micro-spectrometer** optical characterization, and comprehensive **environmental monitoring (BME680 TPH+Gas, GY-30 Lux)**. 
+
+Designed for field research, solar characterization, and optical optimisation, featuring dual-core ESP32 edge processing, on-chip polynomial wavelength calibration, SD card wear-leveled batch logging, and a real-time Tkinter/Matplotlib sci-fi telemetry dashboard.
 
 ---
 
-## 🛠️ Hardware Requirements
+## 🖼️ System Overview & Hardware Gallery
 
-This project is built around the following main components:
-
-| Component | Function | Interface |
-| :--- | :--- | :--- |
-| **ESP32 Microcontroller** | Main processing unit | N/A |
-| **INA226 Power Sensor** | OPV V/I/P Measurement | I2C |
-| **C12880MA Spectrometer** | Spectral Data Acquisition | Analog/Digital (SPI-like) |
-| **BME680 Environmental Sensor** | T/P/H/Gas Data | I2C |
-| **GY-30 (BH1750)** | Ambient Illuminance (Lux) | I2C |
-| **IRLZ44** | Low voltage switching, n-channel MOSFET variable Load for MPPT | PWM |
-| **128x64 SSD1306 OLED** | Real-time Display | I2C |
-| **Micro SD Card Module** | Data Logging Storage | SPI |
+### Hardware Assembled Deck
+<p align="center">
+  <img src="IMG20261022084802.jpg" width="700" alt="Hardware Deck">
+</p>
+<p align="center">
+  <em>Compact enclosure featuring ESP32, photovoltaic panel array, Hamamatsu C12880MA spectrometer, and SSD1306 OLED display.</em>
+</p>
 
 ---
 
-## ⚙️ Software Setup and Configuration
-
-### 1. Arduino IDE / PlatformIO Setup
-
-The project requires the following libraries:
-
-| Library | Author | Purpose |
-| :--- | :--- | :--- |
-| `INA226_WE` | Wolfgang Ewald | INA226 communication |
-| `Adafruit_GFX` | Adafruit | Core graphics for OLED |
-| `Adafruit_SSD1306` | Adafruit | OLED display driver |
-| `Adafruit_BME680` | Adafruit | BME680 sensor driver |
-| `WiFi.h`, `SPI.h`, `SD.h` | Standard ESP32/Arduino | Networking and Storage |
-
-### 2. Wiring Diagram (Sketch)
-
-The core communication busses and control lines are as follows:
-
-| Component | ESP32 Pin (GPIO) | Notes |
-| :--- | :--- | :--- |
-| **I2C Bus (SDA)** | `GPIO_NUM_21` | Shared by INA226, BME680, GY-30, OLED |
-| **I2C Bus (SCL)** | `GPIO_NUM_22` | Shared by INA226, BME680, GY-30, OLED |
-| **SD Card CS** | `GPIO_NUM_5` | Chip Select for SD Card Module (SPI Bus) |
-| **MPPT PWM Out** | `GPIO_NUM_15` | Control Signal for DFRobot MOSFET |
-| **Spectrometer CLK** | `GPIO_NUM_16` | Clock Pulse Out |
-| **Spectrometer ST** | `GPIO_NUM_17` | Start Pulse Out |
-| **Spectrometer VIDEO** | `GPIO_NUM_34` | Analog Input (ADC1\_CH6) |
-
-***Note:*** *As mentioned in the code, ensure **all GND pins** of the ESP32, sensors, and power module are connected to a **common ground** to prevent floating voltages and ensure accurate INA226 measurements.*
-
-### 3. Configuration & Tuning
-
-Key parameters are defined at the top of the sketch. Adjust these as necessary for your specific OPV panel and environment (e.g., in the file `config.h` or directly in the main sketch):
-
-* **WiFi Credentials:**
-    ```cpp
-    const char* ssid = "YOUR_WIFI_SSID";
-    const char* password = "YOUR_WIFI_PASSWORD";
-    ```
-* **MPPT Tuning:**
-    ```cpp
-    const float LUX_MPPT_THRESHOLD = 50.0; // Lux threshold to enable/disable MPPT
-    const int DUTY_CYCLE_STEP = 50; // P&O step size (affects tracking speed)
-    const unsigned long MPPT_INTERVAL_MS = 1000; // Tracking frequency
-    ```
-* **INA226 Calibration:**
-    ```cpp
-    const float RSHUNT = 10.0; // Shunt resistor value in Ohms (Must match your hardware)
-    const float MAX_CURRENT_EXPECTED_AMPS = 0.1; // Max current for calibration range
-    ```
-* **Spectrometer Gain:**
-    ```cpp
-    const uint16_t TARGET_MAX_HIGH = 2500; // Max ADC value before decreasing integration time
-    const uint16_t TARGET_MAX_LOW = 2000;  // Min ADC value before increasing integration time
-    ```
+### Real-Time Python GUI Dashboard
+<p align="center">
+  <img src="Screenshot_2026.png" width="700" alt="GUI Dashboard">
+</p>
+<p align="center">
+  <em>Live multi-threaded monitoring interface showing calibrated spectral profile, V/I/P curves, and saturation flags.</em>
+</p>
 
 ---
 
-## 💾 Data Output Format
+## 🔌 Complete Hardware Pin Connections
 
-The system logs a single line of data to `/SENSOR_LOG.CSV` at each sampling interval (when Lux > 50).
+All peripheral components interface directly with the **ESP32 NodeMCU (38-pin DevKit)**.
 
-| Field Group | Example Fields | Description |
+### 1. Hamamatsu C12880MA Micro-Spectrometer
+| Spectrometer Pin | ESP32 GPIO Pin | Function / Description |
 | :--- | :--- | :--- |
-| **Timestamp** | `Timestamp` | YYYY-MM-DD HH:MM:SS (NTP Synced) or `UNSYNCED_millis()` |
-| **MPPT** | `MPPT_Voltage_V`, `MPPT_Current_A`, `MPPT_Power_W`, `MPPT_DutyCycle` | OpV electrical operating point and load setting. |
-| **BME680** | `BME_Temp_C`, `BME_Pressure_hPa`, `BME_Humidity_perc`, `BME_Gas_Ohm` | Environmental parameters. |
-| **GY-30** | `GY30_Illuminance_Lux` | Ambient light used for MPPT conditional logic. |
-| **Spectrometer** | `Spectro_Saturation_Status`, `Spectro_IntegrationTime_us` | ADC status and current gain setting. |
-| **Spectrograph** | `Spectro_pix0`, `Spectro_pix1`, ..., `Spectro_pix287` | The full 288-channel raw spectral data. |
+| **CLK** (Clock) | **GPIO 16** | Push-pull clock driver ($\text{Clock Period} = 2\,\mu\text{s}$) |
+| **ST** (Start) | **GPIO 17** | Integration start trigger pulse |
+| **VIDEO** (Analog Out) | **GPIO 34** | Analog video output (Configured on ADC1 Channel 6 with $6\,\text{dB}$ attenuation) |
+| **3.3V / GND** | **3.3V / GND** | Regulated power supply and common ground |
 
- DOI: 10.5281/zenodo.17266828
+### 2. I2C Sensor Bus (OLED, BME680, GY-30 Lux)
+| I2C Bus Line | ESP32 GPIO Pin | Connected Peripherals |
+| :--- | :--- | :--- |
+| **SDA** (Data) | **GPIO 21** | SSD1306 OLED, BME680 TPH, GY-30 Lux (BH1750) |
+| **SCL** (Clock) | **GPIO 22** | SSD1306 OLED, BME680 TPH, GY-30 Lux (BH1750) |
+
+### 3. Micro-SD Card Module (SPI Interface)
+| SD Card Pin | ESP32 SPI Pin | Function |
+| :--- | :--- | :--- |
+| **CS** (Chip Select) | **GPIO 5** | SPI Chip Select |
+| **MOSI** | **GPIO 23** | Master Out Slave In |
+| **MISO** | **GPIO 19** | Master In Slave Out |
+| **SCK** | **GPIO 18** | SPI Serial Clock |
+
+### 4. Power Electronics & MPPT Control
+| Component | ESP32 Pin | Description |
+| :--- | :--- | :--- |
+| **PWM Gate Driver** | **GPIO 15** | DC-DC Boost/Buck converter PWM output ($1\,\text{kHz}$, $12$-bit resolution) |
+| **INA226 Current/Voltage** | **I2C (21/22)** | High-side bidirectional bus voltage & shunt current sensor for MPPT loop |
+
+---
+
+## 📐 Optical Calibration (Hamamatsu Serial: `21A02890`)
+
+To eliminate post-processing overhead on host computers, the ESP32 performs on-chip nanometer conversion for all **288 individual pixels** using a factory-provided 5th-order polynomial equation:
+
+$$\lambda(P) = A_0 + B_1 P + B_2 P^2 + B_3 P^3 + B_4 P^4 + B_5 P^5$$
+
+### Calibration Coefficients:
+* $A_0 = 3.02539467 \times 10^2$
+* $B_1 = 2.70472314 \times 10^0$
+* $B_2 = -1.10776346 \times 10^{-3}$
+* $B_3 = -8.62290205 \times 10^{-6}$
+* $B_4 = 1.42568072 \times 10^{-8}$
+* $B_5 = -2.66396197 \times 10^{-12}$
+
+---
+
+## ⚡ Firmware Highlights (`Integrated_Spectral_PV5.ino`)
+
+1. **Ultra-Fast Auto-Integration Loop**: Dynamically regulates spectrometer exposure time targeting an optimal mid-point count ($\sim 2100$ ADC counts), avoiding optical clipping plateaus ($\ge 2700$ counts).
+2. **SD Card Wear-Leveling Buffer**: Gathers 1 sample per second into an internal RAM buffer (30 records) and flushes in a single batched file open/close cycle every 30 seconds to drastically minimize flash memory wear.
+3. **Perturb & Observe (P&O) MPPT**: Tracks maximum solar power with adjustable duty cycle stepping, deadband filtering, and low-lux parking mode ($\le 50\,\text{lux}$).
+4. **On-Chip Nanometer Mapping**: Converts pixel arrays to calibrated nanometers directly on the microcontroller before serial streaming or SD storage.
+
+---
+
+## 🖥️ Python Telemetry Dashboard (`dashboard.py`)
+
+A multi-threaded Tkinter and Matplotlib monitoring deck featuring:
+* **Live Serial Streaming**: Parses high-frequency telemetry packets from the ESP32 at $115200\,\text{baud}$.
+* **Dynamic Saturation Highlighting**: Automatically detects optical clipping ($\text{Max ADC} \ge 2700$) and color-codes the telemetry readout (**Bright Green** for `UNSATURATED`, **Bright Red** for `SATURATED`).
+* **Dual Time Modes**: Toggle between **Rolling Window** (fixed time span) and **Full Compression** ($t=0$ timeline view).
+* **CSV Export**: Direct recording interface to save complete atmospheric, optical, and photovoltaic sweeps.
+
+### CSV Telemetry Protocol Format:
+```csv
+RecordType,Timestamp,Voltage_V,Current_A,Power_W,DutyCycle,Temp_C,Pressure_hPa,Humidity_perc,Gas_Ohm,Lux,IntegrationTime_us,Max_ADC,Saturation_Status,[288 Wavelength columns in nm...]
 
 
 
