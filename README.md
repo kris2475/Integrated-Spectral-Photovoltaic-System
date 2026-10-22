@@ -88,7 +88,7 @@ $$\lambda(P) = A_0 + B_1 P + B_2 P^2 + B_3 P^3 + B_4 P^4 + B_5 P^5$$
 ##  Firmware Highlights (`Integrated_Spectral_PV5.ino`)
 
 1. **Ultra-Fast Auto-Integration Loop**: Dynamically regulates spectrometer exposure time targeting an optimal mid-point count ($\sim 2100$ ADC counts), avoiding optical clipping plateaus ($\ge 2700$ counts).
-2. **SD Card Wear-Leveling Buffer**: Gathers 1 sample per second into an internal RAM buffer (30 records) and flushes in a single batched file open/close cycle every 30 seconds to drastically minimize flash memory wear.
+2. **SD Card Wear-Levelling Buffer**: Gathers 1 sample per second into an internal RAM buffer (30 records) and flushes in a single batched file open/close cycle every 30 seconds to drastically minimise flash memory wear.
 3. **Perturb & Observe (P&O) MPPT**: Tracks maximum solar power with adjustable duty cycle stepping, deadband filtering, and low-lux parking mode ($\le 50\,\text{lux}$).
 4. **On-Chip Nanometer Mapping**: Converts pixel arrays to calibrated nanometers directly on the microcontroller before serial streaming or SD storage.
 
