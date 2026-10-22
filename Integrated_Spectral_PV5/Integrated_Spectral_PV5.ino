@@ -14,11 +14,11 @@
 // ============================================================
 // WIFI & NTP CONFIGURATION
 // ============================================================
-#define PRIMARY_SSID     "SKYYRMR7"
-#define PRIMARY_PASS     "K2xWvDFZkuCh"
+#define PRIMARY_SSID     ""
+#define PRIMARY_PASS     ""
 
-#define FALLBACK_SSID    "CyDen-Guests"
-#define FALLBACK_PASS    "29336Visit2#02"
+#define FALLBACK_SSID    ""
+#define FALLBACK_PASS    ""
 
 const char* ntpServer = "pool.ntp.org";
 const long  gmtOffset_sec = 0;       
