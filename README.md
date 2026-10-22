@@ -98,7 +98,7 @@ $$\lambda(P) = A_0 + B_1 P + B_2 P^2 + B_3 P^3 + B_4 P^4 + B_5 P^5$$
 
 A multi-threaded Tkinter and Matplotlib monitoring deck featuring:
 * **Live Serial Streaming**: Parses high-frequency telemetry packets from the ESP32 at $115200\,\text{baud}$.
-* **Dynamic Saturation Highlighting**: Automatically detects optical clipping ($\text{Max ADC} \ge 2700$) and color-codes the telemetry readout (**Bright Green** for `UNSATURATED`, **Bright Red** for `SATURATED`).
+* **Dynamic Saturation Highlighting**: Automatically detects optical clipping ($\text{Max ADC} \ge 2700$) and colour-codes the telemetry readout (**Bright Green** for `UNSATURATED`, **Bright Red** for `SATURATED`).
 * **Dual Time Modes**: Toggle between **Rolling Window** (fixed time span) and **Full Compression** ($t=0$ timeline view).
 * **CSV Export**: Direct recording interface to save complete atmospheric, optical, and photovoltaic sweeps.
 
