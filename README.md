@@ -13,7 +13,7 @@ Designed for field research, solar characterization, and optical optimisation, f
 
 ---
 
-## 🖼️ System Overview & Hardware Gallery
+##  System Overview & Hardware Gallery
 
 ### Hardware Assembled Deck
 <p align="center">
@@ -69,7 +69,7 @@ All peripheral components interface directly with the **ESP32 NodeMCU (38-pin De
 
 ---
 
-## 📐 Optical Calibration (Hamamatsu Serial: `21A02890`)
+##  Optical Calibration (Hamamatsu Serial: `21A02890`)
 
 To eliminate post-processing overhead on host computers, the ESP32 performs on-chip nanometer conversion for all **288 individual pixels** using a factory-provided 5th-order polynomial equation:
 
@@ -85,7 +85,7 @@ $$\lambda(P) = A_0 + B_1 P + B_2 P^2 + B_3 P^3 + B_4 P^4 + B_5 P^5$$
 
 ---
 
-## ⚡ Firmware Highlights (`Integrated_Spectral_PV5.ino`)
+##  Firmware Highlights (`Integrated_Spectral_PV5.ino`)
 
 1. **Ultra-Fast Auto-Integration Loop**: Dynamically regulates spectrometer exposure time targeting an optimal mid-point count ($\sim 2100$ ADC counts), avoiding optical clipping plateaus ($\ge 2700$ counts).
 2. **SD Card Wear-Leveling Buffer**: Gathers 1 sample per second into an internal RAM buffer (30 records) and flushes in a single batched file open/close cycle every 30 seconds to drastically minimize flash memory wear.
@@ -94,7 +94,7 @@ $$\lambda(P) = A_0 + B_1 P + B_2 P^2 + B_3 P^3 + B_4 P^4 + B_5 P^5$$
 
 ---
 
-## 🖥️ Python Telemetry Dashboard (`dashboard.py`)
+##  Python Telemetry Dashboard (`dashboard.py`)
 
 A multi-threaded Tkinter and Matplotlib monitoring deck featuring:
 * **Live Serial Streaming**: Parses high-frequency telemetry packets from the ESP32 at $115200\,\text{baud}$.
