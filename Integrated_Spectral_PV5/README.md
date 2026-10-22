@@ -14,7 +14,7 @@ Designed for field research, solar characterization, and optical optimisation, f
 
 | Hardware Assembled Deck | Real-Time Python GUI Dashboard |
 | :---: | :---: |
-| ![Hardware Deck](IMG20261022084802.jpg) | ![GUI Dashboard](Screenshot 2026-10-22 084913.png) |
+| ![Hardware Deck](IMG20261022084802.jpg) | ![GUI Dashboard](Screenshot_2026-10-22 084913.png) |
 | *Compact enclosure featuring ESP32, photovoltaic panel array, Hamamatsu C12880MA spectrometer, and SSD1306 OLED display.* | *Live multi-threaded monitoring interface showing calibrated spectral profile, V/I/P curves, and saturation flags.* |
 
 ---
