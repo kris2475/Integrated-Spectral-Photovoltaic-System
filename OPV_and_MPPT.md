@@ -53,7 +53,7 @@ A key adaptation in the **ESP32-based design** is the **low-light fix**:
 
 # Spectral Dynamics and Indoor Environment Monitoring
 
-The ambient light environment in indoor spaces or controlled testbeds is **highly dynamic**—its measurement is crucial for maximising **both energy efficiency and harvesting performance**.
+The ambient light environment in indoor spaces or controlled testbeds is **highly dynamic** - its measurement is crucial for maximising **both energy efficiency and harvesting performance**.
 
 ---
 
