@@ -26,18 +26,11 @@ Designed for field research, solar characterisation, and optical optimisation, f
 ---
 
 ### Real-Time Python GUI Dashboard
-<p align="center">
-  <img src="Integrated_Spectral_PV5/Screenshot_2026.png" width="1000" alt="GUI Dashboard">
-</p>
-<p align="center">
-  <em>Live multi-threaded monitoring interface showing calibrated spectral profile, V/I/P curves, and saturation flags.</em>
-</p>
-
 
 <p align="center">
-  <img src="Integrated_Spectral_PV6/ezgif-optimized.gif" alt="Real-time optical tracking dashboard displaying live trajectory, SQUAL surface telemetry, speed, and heading compass." width="750"/>
+  <img src="Integrated_Spectral_PV6/ezgif-optimized.gif" alt="Real-time optical tracking dashboard displaying live trajectory, SQUAL surface telemetry, speed, and heading compass." width="800"/>
   <br>
-  <em>Figure 1: Real-time optical tracking dashboard displaying live trajectory, SQUAL surface telemetry, speed, and heading compass.</em>
+  <em>Live multi-threaded monitoring interface showing calibrated spectral profile, V/I/P curves, and saturation flags.</em>
 </p>
 
 ---
