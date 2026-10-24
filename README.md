@@ -33,6 +33,13 @@ Designed for field research, solar characterisation, and optical optimisation, f
   <em>Live multi-threaded monitoring interface showing calibrated spectral profile, V/I/P curves, and saturation flags.</em>
 </p>
 
+
+<p align="center">
+  <img src="Integrated_Spectral_PV6/ezgif-optimized.gif" alt="Real-time optical tracking dashboard displaying live trajectory, SQUAL surface telemetry, speed, and heading compass." width="750"/>
+  <br>
+  <em>Figure 1: Real-time optical tracking dashboard displaying live trajectory, SQUAL surface telemetry, speed, and heading compass.</em>
+</p>
+
 ---
 
 ## Complete Hardware Pin Connections
